@@ -1,0 +1,48 @@
+{
+  "name": "google-calendar-free-slots-schedular",
+  "version": "1.0.0",
+  "description": "google calendar free slots meetings schedular",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muhammad-uzair029/google-calendar-free-slots-schedular.git"
+  },
+  "author": "me_uzzii0299",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^9.2.1",
+    "common": "^0.2.5",
+    "cors": "^2.8.5",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "googleapis": "^110.0.0",
+    "moment-timezone": "^0.5.40",
+    "prettier": "^2.5.1",
+    "tslint": "^6.1.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt-nodejs": "^0.0.31",
+    "@types/express": "^4.17.15",
+    "@types/express-session": "^1.17.5",
+    "@types/node": "^17.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jsdoc": "^37.9.4",
+    "eslint-plugin-no-null": "^1.0.2",
+    "nodemon": "^2.0.15",
+    "prettier": "2.8.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "bugs": {
+    "url": "https://github.com/Muhammad-uzair029/google-calendar-free-slots-schedular/issues"
+  },
+  "homepage": "https://github.com/Muhammad-uzair029/google-calendar-free-slots-schedular#readme"
+}
