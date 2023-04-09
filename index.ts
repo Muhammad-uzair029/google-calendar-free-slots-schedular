@@ -25,12 +25,13 @@ const scheduleCalendarMeetings = async (meetings, SERVICE_ACCOUNT_CLIENT_EMAIL,
             GOOGLE_CALENDAR_SCOPE,
             ORGANIZATION_ADMIN_EMAIL
         );
+
         for (const meeting of meetings) {
             const usersFreeSlots = await getFreeSlots(
                 [...meeting.attendeesEmail, meeting.organizedEmail],
-                parseInt(meeting.startTime),
-                parseInt(meeting.endTime),
-                new Date(meeting.freeDateFrame),
+                parseInt(meeting.startDay),
+                parseInt(meeting.endDay),
+                new Date(meeting.usersAvailabilityStartDate),
                 googleCalendarAuth
             );
             for (const freeSlotIndex of usersFreeSlots.freeSlots) {
@@ -67,7 +68,8 @@ const scheduleCalendarMeetings = async (meetings, SERVICE_ACCOUNT_CLIENT_EMAIL,
         }
         // }
     } catch (error) {
-        throw new Error(error);
+        console.log('error>',error)
+        // throw new Error(error);/
     }
 };
 

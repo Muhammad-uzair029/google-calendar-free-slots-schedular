@@ -10,10 +10,10 @@ const result = meetingSchedular.scheduleCalendarMeetings([{
     description: "This is the first meeting description",
     attendeesEmail: ["calendaradmin@kinfolkhq.com"],
     duration: "23",
-    startTime: "1",
-    endTime: "7",
+    startDay: "1",
+    endDay: "7",
     organizedEmail: "kim@kinfolkhq.com",
-    freeDateFrame: "2023-03-28",
+    usersAvailabilityStartDate: "2023-03-28",
 }], SERVICE_ACCOUNT_CLIENT_EMAIL,
     SERVICE_ACCOUNT_PRIVATE_KEY,
     ORGANIZATION_ADMIN_EMAIL)
