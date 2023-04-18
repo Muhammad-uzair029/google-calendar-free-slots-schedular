@@ -12,7 +12,7 @@ const result = meetingSchedular.scheduleCalendarMeetings([{
     duration: "23",
     startDay: "1",
     endDay: "7",
-    organizedEmail: "kim@kinfolkhq.com",
+    organizerEmail: "kim@kinfolkhq.com",
     usersAvailabilityStartDate: "2023-03-28",
 }], SERVICE_ACCOUNT_CLIENT_EMAIL,
     SERVICE_ACCOUNT_PRIVATE_KEY,

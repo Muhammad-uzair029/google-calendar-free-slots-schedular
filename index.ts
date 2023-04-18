@@ -8,11 +8,10 @@ const {google} = require('googleapis');
  * @param meetings
  */
 const scheduleCalendarMeetings = async (meetings, SERVICE_ACCOUNT_CLIENT_EMAIL,
-    SERVICE_ACCOUNT_PRIVATE_KEY,
-    ORGANIZATION_ADMIN_EMAIL) => {
+                                        SERVICE_ACCOUNT_PRIVATE_KEY,
+                                        ORGANIZATION_ADMIN_EMAIL) => {
     try {
-        
-        const GOOGLE_CALENDAR_SCOPE=['https://www.googleapis.com/auth/admin.directory.user.readonly',
+        const GOOGLE_CALENDAR_SCOPE = ['https://www.googleapis.com/auth/admin.directory.user.readonly',
             'https://www.googleapis.com/auth/admin.directory.user ',
             'https://www.googleapis.com/auth/calendar',
             ' https://www.googleapis.com/auth/userinfo.email',
@@ -25,15 +24,16 @@ const scheduleCalendarMeetings = async (meetings, SERVICE_ACCOUNT_CLIENT_EMAIL,
             GOOGLE_CALENDAR_SCOPE,
             ORGANIZATION_ADMIN_EMAIL
         );
-
+        
         for (const meeting of meetings) {
-            const usersFreeSlots = await getFreeSlots(
-                [...meeting.attendeesEmail, meeting.organizedEmail],
+            const usersFreeSlots = await getUsersFreeSlots(
+                [...meeting.attendeesEmail, meeting.organizerEmail],
                 parseInt(meeting.startDay),
                 parseInt(meeting.endDay),
                 new Date(meeting.usersAvailabilityStartDate),
                 googleCalendarAuth
             );
+            
             for (const freeSlotIndex of usersFreeSlots.freeSlots) {
                 const timeDifferenceOfSlotsTimes = (freeSlotIndex.end.getTime() - freeSlotIndex.start.getTime()) / (1000 * 60);
                 
@@ -52,34 +52,30 @@ const scheduleCalendarMeetings = async (meetings, SERVICE_ACCOUNT_CLIENT_EMAIL,
                     meetingStartTime = new Date(freeSlotIndex.start);
                     meetingEndTime = new Date(meetingEndTime);
                     const scheduledMeeting = meeting;
-                    console.log('scheduledMeeting>', scheduledMeeting, meetingStartTime,
+                    
+                    const meetingCreatedData = await createCalendarMeetingEvent(
+                        meetingStartTime,
                         meetingEndTime,
-                        scheduledMeeting)
-                    // const journeyMeetingCreated = await createMeetingCalendarEvent(
-                    //     meetingStartTime,
-                    //     meetingEndTime,
-                    //     scheduledMeeting,
-                    //     meeting.organizerEmail,
-                    // googleCalendarAuth
-                    // );
-                    // return journeyMeetingCreated;
+                        scheduledMeeting,
+                        meeting.organizerEmail,
+                        googleCalendarAuth
+                    );
+                    return meetingCreatedData;
                 }
             }
         }
-        // }
     } catch (error) {
-        console.log('error>',error)
-        // throw new Error(error);/
+        throw new Error(error);
     }
 };
 
 /**
- * createMeetingCalendarEvent
+ * createCalendarMeetingEvent
  *
- * @param meeting journeyMeetings
+ * @param meeting Meeting
  *
  */
-const createMeetingCalendarEvent = async (
+const createCalendarMeetingEvent = async (
     meetingStartTime,
     meetingEndTime,
     scheduledMeeting,
@@ -101,34 +97,41 @@ const createMeetingCalendarEvent = async (
                 timeZone: '',
             },
             attendees: [{email: scheduledMeeting.attendeesEmail.toString()}],
+            conferenceData: {
+                createRequests: {
+                    conferenceSolutionKey: {
+                        type: 'hangoutsMeet',
+                    },
+                    requestId: 'somerequestid',
+                }
+            }
         };
         const response = await calendar.events.insert({
             auth: googleCalendarAuth,
             calendarId: organizerEmail.toString(),
+            conferenceDataVersion: 1,
             resource: meetingEvent,
             sendNotifications: true,
         });
-        return {
-            startTime: response.data.start.dateTime,
-            endTime: response.data.end.dateTime,
-            link: response.data.htmlLink,
-        };
+        
+        return response.data
+        
     } catch (error) {
         throw new Error(error);
     }
 };
 
 /**
- * getFreeSlots
+ * getUsersFreeSlots
  * You got the within days from user, and we need to get the exact date
  * I got the new Hire start date and day from(means that start day from within)
- * @param participantsEmail journeyMeetings
+ * @param participantsEmail
  * @param withingEndDate
  * @param withinStartDate
  * @param userStartDate
  * @param googleCalendarAuth
  */
-const getFreeSlots = async (
+const getUsersFreeSlots = async (
     participantsEmail,
     withinStartDate,
     withingEndDate,
@@ -300,7 +303,7 @@ const getUsersTimeZoneAndDifference = async (participantsEmail, googleCalendarAu
                     });
                 });
         }
-   
+        
         const firstTimeZoneDateFormate = moment.tz('09:00', 'HH:mm', usersTimeZone[0]['timeZone'].toString());
         const secondTimeZoneDateFormate = moment.tz('09:00', 'HH:mm', usersTimeZone[1]['timeZone'].toString());
         
@@ -360,6 +363,6 @@ const checkIfFree = async (date, calendarId, googleCalendarAuth) => {
 
 module.exports = {
     scheduleCalendarMeetings: scheduleCalendarMeetings,
-    getFreeSlots: getFreeSlots,
-    createMeetingCalendarEvent: createMeetingCalendarEvent
+    getUsersFreeSlots: getUsersFreeSlots,
+    createCalendarMeetingEvent: createCalendarMeetingEvent
 }
