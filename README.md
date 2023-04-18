@@ -5,17 +5,17 @@ finding free slots in the calendars of attendees and checking for availability d
 timeZone working hours issues and also can save you valuable time and effort in the scheduling process and ensure that
 everyone involved can find a suitable time to meet.
 
-## <span style="color:red;">Installation</span>
+## Installation
 
-You can install this package using npm by running the following command in your terminal.
+Install the package using npm by running the following command in your terminal:
 
 ```bash
 npm install google-calendar-free-slots-scheduler
 ```
 
-## <span style="color:red;">After Installation</span>
+## After Installation</span>
 
-### Follow these steps:
+### <span style="color:red;">Follow these steps:</span>
 
 - Setup you google service account.
 - Enable the google calendar API.
@@ -23,18 +23,17 @@ npm install google-calendar-free-slots-scheduler
 
 ## Usage
 
-**get all modules in one object**
+**Getting all modules in one object**
 
-The top level export gives you an object with all the three modules:
+The top-level export gives you an object with all three modules:
 
 ```js
 var meetingSchedular = require('google-calendar-free-slots-schedular');
 ```
 
-**Only get a specific module**
+**Getting a specific module**
 
-If you just want the scheduleCalendarMeetings,getUsersFreeSlots or createCalendarMeeting:
-
+If you only want the <b>scheduleCalendarMeetings</b>, <b>getUsersFreeSlots</b>, or <b>createCalendarMeeting</b> module:
 ```js
 var scheduleCalendarMeetings = require('google-calendar-free-slots-schedular').scheduleCalendarMeetings;
 var getUsersFreeSlots = require('google-calendar-free-slots-schedular').getUsersFreeSlots;
@@ -45,17 +44,17 @@ var createCalendarMeeting = require('google-calendar-free-slots-schedular').crea
 
 ### <span style="color:red;">ScheduleCalendarMeetings</span>
 
-get the free slots of all participents and schedule the meeting within specific time frame and timeZone working hours.
+scheduleCalendarMeetings is used to get the free slots of all participants and schedule the meeting within a specific time frame and timezone working hours.
 
 **Params**
 
 * `meetings` **{Array}**: An array of meeting objects with the necessary parameters, including the title, description,
-  organizedEmail, attendeesEmail, startDay, endDay, duration, and usersAvailabilityStartDate
+organizedEmail, attendeesEmail, startDay, endDay, duration, and usersAvailabilityStartDate
 * `SERVICE_ACCOUNT_CLIENT_EMAIL` **{String}**: The email address of the service account used for authentication
-* `SERVICE_ACCOUNT_PRIVATE_KEY` **{String}**:  The private key of the service account used for authentication.
+* `SERVICE_ACCOUNT_PRIVATE_KEY` **{String}**: The private key of the service account used for authentication.
 * `ORGANIZATION_ADMIN_EMAIL` **{String}**: The email address of the organization admin whose Google Calendar will be
-  used for scheduling the meetings.
-* `returns` **{Array}**: scheduled google meeting data.
+* used for scheduling the meetings.
+* `returns` **{Array}**: Scheduled Google meeting data.
 
 **Example**
 
@@ -171,10 +170,7 @@ getUsersFreeSlots(participantsEmail, withinStartDate, withinEndDate, userStartDa
 ```
 ## Conclusion
 
-With Google Calendar Free Slots Scheduler, scheduling meetings on Google Calendar can be simple and hassle-free. This
-package can save you valuable time and effort in the scheduling process and ensure that everyone involved can find a
-suitable time to meet.
-
+The Google Calendar Free Slots Scheduler is a software package that facilitates the process of scheduling meetings on Google Calendar. By using this package, individuals can save time and effort in the scheduling process and ensure that all participants are able to find a mutually convenient time to meet.
 ## License
 
 This package is licensed under the MIT License.
